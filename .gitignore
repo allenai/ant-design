@@ -60,4 +60,5 @@ scripts/previewEditor/index.html
 
 # Shellac
 shellac/*.js
-dist_varnish
+dist_varnish/*
+!dist_varnish/.keep
