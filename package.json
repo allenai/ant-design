@@ -271,9 +271,9 @@
     "yaml-front-matter": "^4.0.0"
   },
   "peerDependencies": {
-  "react": ">=16.9.0",
-  "react-dom": ">=16.9.0",
-  "styled-components": "^4.3.2"
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0",
+    "styled-components": "^4.3.2"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

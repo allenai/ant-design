@@ -24,6 +24,7 @@ npm-debug.log
 nohup.out
 _site
 _data
+dist
 report.html
 /lib
 /es
@@ -56,9 +57,6 @@ site/theme/template/Resources/*.jsx
 site/theme/template/Resources/**/*.jsx
 site/theme/template/NotFound.jsx
 scripts/previewEditor/index.html
-
-dist*
-!dist/.keep
 
 # Shellac
 shellac/*.js
