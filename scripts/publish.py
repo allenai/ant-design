@@ -4,6 +4,7 @@ import subprocess
 import os
 import argparse
 import json
+import shutil
 
 def rename_module(content: str, new_name="@allenai/varnish") -> str:
     parsed = json.loads(content)
@@ -17,6 +18,7 @@ if __name__ == "__main__":
     parser.add_argument("--dry-run", action="store_true", help="If specified nothing will be published.")
     parser.add_argument("--skip-check-commit", action="store_true",
                         help="If specified the the `check-commit` step is skipped")
+    parser.add_argument("--skip-tests", action="store_true", help="If specified tests are skipped.")
 
     args = parser.parse_args()
 
@@ -29,15 +31,17 @@ if __name__ == "__main__":
     cmds = [ "check-commit", "test-all", "version", "compile", "dist" ]
     if args.skip_check_commit:
         cmds = [ c for c in cmds if c != "check-commit" ]
+    if args.skip_tests:
+        cmds = [ c for c in cmds if c != "test-all" ]
 
     for cmd in cmds:
         subprocess.check_call([ "npm", "run", cmd ], cwd=root)
 
-    # HACK (codeviking): If we change the name of the package in `package.json` and
-    # `package-lock.json`, antd's build scripts fail for opaque reasons. We workaround that
-    # by not changing the name until we're about ready to publish.
-    with open(f"{root}{os.path.sep}package.json", "r+", encoding="utf-8") as pkg:
-        with open(f"{root}{os.path.sep}package-lock.json", "r+", encoding="utf-8") as lock:
+    # HACK (codeviking):
+    # We have to leave the module name unmodified, otherwise `antd`'s build tools fail for
+    # opaque reasons. To work around this we modify the name just before publishing the module.
+    with open(os.path.join(root, "package.json"), "r+", encoding="utf-8") as pkg:
+        with open(os.path.join(root, "package-lock.json"), "r+", encoding="utf-8") as lock:
             orig_pkg_content = pkg.read()
             orig_lock_content = lock.read()
 
@@ -49,6 +53,16 @@ if __name__ == "__main__":
             lock.seek(0)
             lock.write(rename_module(orig_lock_content))
             lock.truncate()
+
+            # We also need to modify the name of the artifacts in dist.
+            for filename in os.listdir(os.path.join(root, "dist")):
+                if not filename.startswith("antd"):
+                    continue
+                antd_name = os.path.join(root, "dist", filename)
+                varnish_name = os.path.join(root, "dist", f"varnish{filename.lstrip('antd')}")
+                shutil.move(antd_name, varnish_name)
+                print(f"renamed {os.path.relpath(antd_name, os.getcwd())} -> " +
+                      f"{os.path.relpath(varnish_name, os.getcwd())}")
 
             # Publish to NPM
             subprocess.check_call([ "npm", "publish", "--dry-run" if args.dry_run else None ])
