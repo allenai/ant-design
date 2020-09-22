@@ -51,7 +51,7 @@
     "check-commit": "node ./scripts/check-commit",
     "prestart": "npm run version",
     "precompile": "npm run version",
-    "pretest": "npm run version",
+    "pretest": "cd vendor/antd-tools && npm install && cd ../../ && npm run version",
     "predist": "npm run version",
     "presite": "npm run version",
     "color-less": "node ./scripts/generate-color-less",
