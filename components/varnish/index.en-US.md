@@ -32,7 +32,7 @@ or @allenai/varnish will interact with, yet:
 - Our docs for it aren't great
 - Typesafey falls out the window
 
-We should fix one (or both) of these. I bet the former is the easier fix...
+We should fix one (or both) of these. The former is likely the easier fix...
 
 */
 
