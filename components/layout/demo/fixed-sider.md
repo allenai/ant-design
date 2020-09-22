@@ -24,9 +24,8 @@ import {
   UserOutlined,
   UploadOutlined,
   VideoCameraOutlined,
-  ThemeProvider,
 } from '@ant-design/icons';
-import { Layout, Menu } from '@allenai/varnish';
+import { Layout, Menu, ThemeProvider } from '@allenai/varnish';
 
 const { Header, Content, Footer, Sider } = Layout;
 

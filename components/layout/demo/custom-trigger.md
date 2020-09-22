@@ -20,9 +20,8 @@ import {
   UserOutlined,
   VideoCameraOutlined,
   UploadOutlined,
-  ThemeProvider,
 } from '@ant-design/icons';
-import { Layout, Menu } from '@allenai/varnish';
+import { Layout, Menu, ThemeProvider } from '@allenai/varnish';
 
 const { Header, Sider, Content } = Layout;
 
