@@ -233,7 +233,7 @@
     "logrocket-react": "^4.0.0",
     "lz-string": "^1.4.4",
     "mockdate": "^3.0.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^3.0.0",
     "open": "^7.0.3",
     "postcss": "^7.0.18",
     "postcss-cli": "^6.1.3",
